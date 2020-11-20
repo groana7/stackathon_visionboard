@@ -1,85 +1,37 @@
 import React, { Component } from 'react';
-import Draggable, {DraggableCore} from 'react-draggable';
+import Draggable, { DraggableCore } from 'react-draggable';
 
-// const {ReactDraggable: Draggable, React, ReactDOM} = window;
+// Draggable
+//  If you want to completely control the lifecycle of the component, use <DraggableCore>
 
 class ImageCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       spans: 0,
-      activeDrags: 0,
-      deltaPosition: {
-        x: 0,
-        y: 0,
-      },
-      controlledPosition: {
-        x: -400,
-        y: 200,
-      },
     };
 
+    // for Pexels
     this.imageRef = React.createRef();
   }
 
   componentDidMount() {
+    // for Pexels
     this.imageRef.current.addEventListener('load', this.setSpans);
   }
 
+  // for Pexels
   setSpans = () => {
     const height = this.imageRef.current.clientHeight;
     const spans = Math.ceil(height / 10 + 1);
     this.setState({ spans });
   };
 
-  handleDrag = (e, ui) => {
-    const { x, y } = this.state.deltaPosition;
-    this.setState({
-      deltaPosition: {
-        x: x + ui.deltaX,
-        y: y + ui.deltaY,
-      },
-    });
-  };
-
-  onStart = () => {
-    this.setState({ activeDrags: ++this.state.activeDrags });
-  };
-
-  onStop = () => {
-    this.setState({ activeDrags: --this.state.activeDrags });
-  };
-
-  // For controlled component
-  adjustXPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const { x, y } = this.state.controlledPosition;
-    this.setState({ controlledPosition: { x: x - 10, y } });
-  };
-
-  adjustYPos = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const { controlledPosition } = this.state;
-    const { x, y } = controlledPosition;
-    this.setState({ controlledPosition: { x, y: y - 10 } });
-  };
-
-  onControlledDrag = (e, position) => {
-    const { x, y } = position;
-    this.setState({ controlledPosition: { x, y } });
-  };
-
-  onControlledDragStop = (e, position) => {
-    this.onControlledDrag(e, position);
-    this.onStop();
-  };
-
   render() {
     const { photographer, src } = this.props.image;
     const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
-    const { deltaPosition, controlledPosition } = this.state;
+
+    // console.log('IMAGE CARD THIS:', this) // interesting
 
     return (
       <div>
