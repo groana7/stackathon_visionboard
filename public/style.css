@@ -1,3 +1,23 @@
 body {
   font-family: sans-serif;
 }
+
+.container {
+  margin-top: 10px;
+  width: 500px;
+  height: 4000px;
+  /* border: 3px solid #00c9cd; */
+}
+
+#canvas {
+  margin-top: 10px;
+  width: 600px;
+  height: 4000px;
+  /* border: 3px solid #00c9cd; */
+}
+
+#page {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}

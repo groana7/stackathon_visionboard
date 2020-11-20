@@ -7,7 +7,7 @@ const path = require('path');
 const app = express();
 
 // convention to be all caps
-const port = process.env.PORT || 3000;
+const port = 4000;
 
 // middleware
 app.use(morgan('dev'));
