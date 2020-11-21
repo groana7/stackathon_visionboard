@@ -9,8 +9,9 @@ class Board extends Component {
   }
 
   onClick(evt) {
-    console.log(evt);
-    if (!['IMG', 'INPUT'].includes(evt.target.tagName)) {
+    // console.log(evt);
+
+    if (!['IMG'].includes(evt.target.tagName) && (evt.target.className !== "textInput")) {
       this.props.addTextBox(evt.pageX, evt.pageY);
     }
   }
@@ -23,9 +24,8 @@ class Board extends Component {
       <div
         id="board"
         onClick={this.onClick}
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: window.innerHeight, width: '900px' }}
       >
-        <p>CANVAS</p>
         <div className="image-list">
           {images.map((image) => {
             return (
@@ -33,16 +33,19 @@ class Board extends Component {
             );
           })}
           {textBoxes.map((textBox, index) => (
-            <input
+            <div 
+              contentEditable="true"
+              className="textInput"
               key={index}
-              type="text"
               style={{
-                position: 'fixed',
-                left: textBox.x + 'px',
-                top: textBox.y + 'px',
+                    position: 'fixed',
+                    left: textBox.x + 'px',
+                    top: textBox.y + 'px',
               }}
-              defaultValue={textBox.text}
-            ></input>
+
+            >
+              This text can be edited by the user.
+            </div>
           ))}
         </div>
       </div>
