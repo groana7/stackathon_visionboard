@@ -3,6 +3,11 @@ import Draggable, { DraggableCore } from 'react-draggable';
 
 // Draggable
 //  If you want to completely control the lifecycle of the component, use <DraggableCore>
+// clientX, clientY, target.currentSrc
+// zIndex for layer
+// button for text?
+  // text objects
+  // input text box with background transparent
 
 class ImageCard extends Component {
   constructor(props) {
@@ -10,6 +15,8 @@ class ImageCard extends Component {
     this.state = {
       spans: 0,
     };
+
+    this.onStart = this.onStart.bind(this);
 
     // for Pexels
     this.imageRef = React.createRef();
@@ -27,54 +34,36 @@ class ImageCard extends Component {
     this.setState({ spans });
   };
 
-  render() {
-    const { photographer, src } = this.props.image;
-    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
+  onStart(evt) {
+    // console.log(evt);
+    if (evt.target.currentSrc) {
+      this.props.touchImage(evt.target.id);
+    }
 
-    // console.log('IMAGE CARD THIS:', this) // interesting
+    // somethinig to float on top
+     evt.target.style.position = 'absolute';
+  }
+
+  render() {
+    const { photographer, src, id, touched } = this.props.image;
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
 
     return (
       <div>
         <Draggable {...dragHandlers}>
           <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
-            <img ref={this.imageRef} alt={photographer} src={src.medium} />
+            <img
+              style={{ position: touched ? 'absolute' : ''}}
+              id={id}
+              ref={this.imageRef}
+              alt={photographer}
+              src={src.medium}
+            />
           </div>
         </Draggable>
       </div>
     );
   }
 }
-// class ImageCard extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = { spans: 0 };
-
-//         this.imageRef = React.createRef();
-//     }
-
-//     componentDidMount() {
-//         this.imageRef.current.addEventListener('load', this.setSpans);
-//     }
-
-//     setSpans = () => {
-//         const height = this.imageRef.current.clientHeight;
-//         const spans = Math.ceil(height / 10 + 1);
-//         this.setState({ spans });
-//     }
-
-//     render() {
-//         const {photographer, src} = this.props.image;
-
-//         return (
-//             <div style={{ gridRowEnd: `span ${this.state.spans}`}}>
-//                 <img
-//                     ref={this.imageRef}
-//                     alt={photographer}
-//                     src={src.medium}
-//                 />
-//             </div>
-//         );
-//     }
-// }
 
 export default ImageCard;

@@ -3,16 +3,19 @@ import ImageCard from './ImageCard';
 
 const ImageList = (props) => {
   const images = props.images;
-  // THIS CODE DOES NOT CAUSE AN ERROR
-  // const images = props.images.map((image) => {
-  //     return <ImageCard key={image.id} image={image}/>;
-  // })
-  // return <div className="image-list">{images}</div>;
+  // console.log(images);
 
   return (
-    <div div className="image-list">
-      {images.map((image) => {
-        return <ImageCard key={image.id} image={image} />;
+    <div className="image-list" style={{width: "100%"}}>
+      {images.map((image, index) => {
+        return (
+          <ImageCard
+            key={image.id}
+            image={image}
+            touchImage={props.touchImage}
+            // style={{top: 200 * index}}
+          />
+        );
       })}
     </div>
   );
