@@ -36,7 +36,7 @@ class App extends Component {
 
   touchImage(id) {
     const image = this.state.photos.find((photo) => photo.id === +id);
-    console.log(image);
+    // console.log(image);
 
     this.setState({
       selected: [...this.state.selected, image],

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import Draggable, { DraggableCore } from 'react-draggable';
 
-// Draggable
-//  If you want to completely control the lifecycle of the component, use <DraggableCore>
-// clientX, clientY, target.currentSrc
 // zIndex for layer
-// button for text?
-// text objects
-// input text box with background transparent
 
 class ImageCard extends Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ImageCard from './ImageCard';
+import Draggable, { DraggableCore } from 'react-draggable';
 
 class Board extends Component {
   constructor() {
@@ -10,8 +11,14 @@ class Board extends Component {
 
   onClick(evt) {
     // console.log(evt);
+    // console.log(evt.target.className);
 
-    if (!['IMG'].includes(evt.target.tagName) && (evt.target.className !== "textInput")) {
+    if (
+      !['IMG'].includes(evt.target.tagName) &&
+      evt.target.className !== 'textInput' &&
+      evt.target.className !==
+        'textInput react-draggable react-draggable-dragged'
+    ) {
       this.props.addTextBox(evt.pageX, evt.pageY);
     }
   }
@@ -19,6 +26,7 @@ class Board extends Component {
   render() {
     const images = this.props.images;
     const textBoxes = this.props.textBoxes;
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
 
     return (
       <div
@@ -33,18 +41,22 @@ class Board extends Component {
             );
           })}
           {textBoxes.map((textBox, index) => (
-            <div 
-              contentEditable="true"
-              className="textInput"
-              key={index}
-              style={{
-                    position: 'fixed',
+            <div>
+              <Draggable {...dragHandlers}>
+                <div
+                  contentEditable="true"
+                  className="textInput"
+                  key={index}
+                  style={{
+                    position: 'absolute',
                     left: textBox.x + 'px',
                     top: textBox.y + 'px',
-              }}
-
-            >
-              This text can be edited by the user.
+                    fontSize: "20px"
+                  }}
+                >
+                  This text can be edited by the user.
+                </div>
+              </Draggable>
             </div>
           ))}
         </div>
