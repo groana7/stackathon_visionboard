@@ -3,6 +3,8 @@ import pexels from '../../server/api/pexels';
 import SearchBar from './SearchBar';
 import ImageList from './ImageList';
 import Board from './Board';
+import Frame from 'react-frame-component';
+import Footer from './Footer'
 
 class App extends Component {
   constructor() {
@@ -33,6 +35,7 @@ class App extends Component {
 
   touchImage(id) {
     const image = this.state.photos.find((photo) => photo.id === +id);
+    console.log(image)
 
     this.setState({
       selected: [...this.state.selected, image],
@@ -56,18 +59,28 @@ class App extends Component {
 
   render() {
     return (
-      <div id="page">
-        <div className="container">
-          <SearchBar onSubmit={this.onSearchSubmit} />
-          <ImageList images={this.state.photos} touchImage={this.touchImage} />
+      <div>
+        <div id="page">
+          <Frame style={{width: "900px", height: window.innerHeight}}>
+            <div className="container">
+              <SearchBar onSubmit={this.onSearchSubmit} />
+              <ImageList
+                images={this.state.photos}
+                touchImage={this.touchImage}
+              />
+            </div>
+          </Frame>
+          <Frame style={{width: window.innerWidth, height: window.innerHeight}}>
+            <div id="canvas">
+              <Board
+                images={this.state.selected}
+                addTextBox={this.addTextBox}
+                textBoxes={this.state.textBoxes}
+              />
+            </div>
+          </Frame>
         </div>
-        <div id="canvas">
-          <Board
-            images={this.state.selected}
-            addTextBox={this.addTextBox}
-            textBoxes={this.state.textBoxes}
-          />
-        </div>
+          <Footer />
       </div>
     );
   }
