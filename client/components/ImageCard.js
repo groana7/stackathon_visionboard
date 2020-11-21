@@ -6,8 +6,8 @@ import Draggable, { DraggableCore } from 'react-draggable';
 // clientX, clientY, target.currentSrc
 // zIndex for layer
 // button for text?
-  // text objects
-  // input text box with background transparent
+// text objects
+// input text box with background transparent
 
 class ImageCard extends Component {
   constructor(props) {
@@ -35,13 +35,11 @@ class ImageCard extends Component {
   };
 
   onStart(evt) {
-    // console.log(evt);
     if (evt.target.currentSrc) {
       this.props.touchImage(evt.target.id);
     }
 
-    // somethinig to float on top
-     evt.target.style.position = 'absolute';
+    evt.target.style.position = 'absolute';
   }
 
   render() {
@@ -53,7 +51,7 @@ class ImageCard extends Component {
         <Draggable {...dragHandlers}>
           <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
             <img
-              style={{ position: touched ? 'absolute' : ''}}
+              style={{ position: touched ? 'absolute' : '' }}
               id={id}
               ref={this.imageRef}
               alt={photographer}

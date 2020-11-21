@@ -20,7 +20,11 @@ class Board extends Component {
     const textBoxes = this.props.textBoxes;
 
     return (
-      <div id="board" onClick={this.onClick} style={{height: "100%", width: "100%"}}>
+      <div
+        id="board"
+        onClick={this.onClick}
+        style={{ height: '100%', width: '100%' }}
+      >
         <p>CANVAS</p>
         <div className="image-list">
           {images.map((image) => {

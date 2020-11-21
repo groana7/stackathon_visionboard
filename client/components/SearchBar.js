@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class SearchBar extends Component {
   constructor() {
-    super()
+    super();
     this.state = { term: '' };
   }
 
