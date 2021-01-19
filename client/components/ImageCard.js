@@ -1,46 +1,54 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import Draggable, { DraggableCore } from 'react-draggable';
 
 // zIndex for layer
 
-const ImageCard = (props) => {
+class ImageCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      spans: 0,
+    };
 
-  const [spans, useSpans] = useState(0)
-  const imageRef = React.createRef();
+    this.onStart = this.onStart.bind(this);
 
-  const { photographer, src, id, touched } = props.image;
-  // why is onStop not found?
-  const dragHandlers = { onStart, onStop };
+    // for Pexels
+    this.imageRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // for Pexels
+    this.imageRef.current.addEventListener('load', this.setSpans);
+  }
 
   // for Pexels
-  const setSpans = () => {
-    const height = imageRef.current.clientHeight;
+  setSpans = () => {
+    const height = this.imageRef.current.clientHeight;
     const spans = Math.ceil(height / 10 + 1);
-
-    useSpans({spans})
+    this.setState({ spans });
   };
 
-  useEffect(() => {
-    imageRef.current.addEventListener('load', setSpans);
-  })
-
-  const onStart = (evt) => {
+  onStart(evt) {
     if (evt.target.currentSrc) {
-      props.touchImage(evt.target.id);
+      this.props.touchImage(evt.target.id);
     }
 
     evt.target.style.position = 'absolute';
   }
 
+  render() {
+    const { photographer, src, id, touched } = this.props.image;
+    // where does onStop come from?
+    const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
+
     return (
       <div>
         <Draggable {...dragHandlers}>
-          {/* use hook */}
-          <div style={{ gridRowEnd: `span ${spans}` }}>
+          <div style={{ gridRowEnd: `span ${this.state.spans}` }}>
             <img
               style={{ position: touched ? 'absolute' : '' }}
               id={id}
-              ref={imageRef}
+              ref={this.imageRef}
               alt={photographer}
               src={src.medium}
             />
@@ -48,7 +56,7 @@ const ImageCard = (props) => {
         </Draggable>
       </div>
     );
-
+  }
 }
 
 export default ImageCard;
